@@ -9,6 +9,6 @@ services:
     environment:
       - POSTGRES_PASSWORD=${PSQL_PASSWORD} 
     ports: 
-      - "7432:5432"
+      - "${PSQL_PORT}:5432"
 
 
