@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, DeclarativeBase
 
-from database import Base
 
+class Base(DeclarativeBase):
+    pass
 
 class Quiz(Base):
     __tablename__ = "quiz_questions"

@@ -1,13 +1,16 @@
 from datetime import datetime
 
 import requests
+
 from fastapi import FastAPI, Depends, HTTPException
+
 from sqlalchemy.orm import Session
 from pydantic import parse_obj_as
 
-from database import Base, engine, SessionLocal
-from schemas import QuestionParam, Question, QuestionCreate, QuestionsList
+from database import engine, SessionLocal
+from schemas import QuestionParam, Question
 from crud import get_question, create_question
+from models import Base
 
 
 Base.metadata.create_all(bind=engine)
@@ -45,3 +48,5 @@ def get_questions(payload: QuestionParam, db: Session = Depends(get_db)) -> Ques
                 question
             )
             return question
+
+
