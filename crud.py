@@ -6,12 +6,16 @@ from schemas import QuestionCreate
 
 
 def get_question(db: Session, question_id: int):
-    return db.query(Quiz).filter(Quiz.id == question_id).first()
+    return db.query(Quiz).filter(Quiz.question_id == question_id).first()
+
+
+def get_previous_question(db: Session, id: int):
+    return db.query(Quiz).filter(Quiz.id == (id - 1)).first()
 
 
 def create_question(db: Session, question: QuestionCreate):
     db_question = Quiz(
-        id=question.id,
+        question_id=question.id,
         question=question.question,
         answer=question.answer,
         created_at=question.created_at,

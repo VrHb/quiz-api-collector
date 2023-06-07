@@ -9,7 +9,7 @@ from pydantic import parse_obj_as
 
 from database import engine, SessionLocal
 from schemas import QuestionParam, Question
-from crud import get_question, create_question
+from crud import get_question, get_previous_question, create_question
 from models import Base
 
 
@@ -26,7 +26,7 @@ def get_db():
 
 
 @app.post("/quiz/")
-def get_questions(payload: QuestionParam, db: Session = Depends(get_db)) -> Question | None:
+def collect_question(payload: QuestionParam, db: Session = Depends(get_db)) -> str | None:
     questions_num = payload.questions_num
     params = {"count": questions_num}
     jservice_response = requests.get(
@@ -47,6 +47,10 @@ def get_questions(payload: QuestionParam, db: Session = Depends(get_db)) -> Ques
                 db,
                 question
             )
-            return question
+            question = get_previous_question(
+                    db,
+                    id=db_question.id
+            )
+            return question.question
 
 
