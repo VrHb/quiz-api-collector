@@ -1,6 +1,6 @@
 # Сервис для сбора вопросов по викторинам
 
-### Установка проекта
+## Установка проекта
 
 1. Скопируйте репозиторий
 
@@ -43,8 +43,20 @@ echo "PSQL_PORT=<порт>" >> .env
 docker-compose up -d
 ```
 
-### Запуск сервиса
+## Запуск сервиса
 
 ```
 uvicorn main:app --reload
+```
+
+#### Пример запроса
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/quiz/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "questions_num": 3
+}'
 ```
