@@ -8,6 +8,8 @@ services:
     restart: always
     environment:
       - POSTGRES_PASSWORD=${PSQL_PASSWORD} 
+    volumes:
+      - /var/lib/postgresql
     ports: 
       - "${PSQL_PORT}:5432"
 
