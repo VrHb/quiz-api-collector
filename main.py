@@ -1,4 +1,7 @@
+import json
 import requests
+
+from loguru import logger
 
 from fastapi import FastAPI, Depends, HTTPException
 
@@ -37,7 +40,8 @@ def create_question_in_db(question: Question, db: Session) -> str | None:
                 db,
                 id=db_question.id
         )
-        return question.question
+        if question:
+            return question.question
 
 
 def get_questions_from_jservice(payload: QuestionParam = None) -> dict | None:
@@ -55,12 +59,15 @@ def get_questions_from_jservice(payload: QuestionParam = None) -> dict | None:
 
 @app.post("/quiz/")
 def collect_question(payload: QuestionParam, db: Session = Depends(get_db)) -> str | None:
-    questions = get_questions_from_jservice(payload)
-    parsed_questions = parse_obj_as(list[Question], questions) 
-    for question in parsed_questions:
-        created_question = create_question_in_db(question, db)
-        if created_question:
-            return created_question
+    while True:
+        questions = get_questions_from_jservice(payload)
+        logger.info(questions)
+        parsed_questions = parse_obj_as(list[Question], questions) 
+        for question in parsed_questions:
+            created_question = create_question_in_db(question, db)
+            logger.info(created_question)
+            if created_question:
+                return created_question
 
 
 
