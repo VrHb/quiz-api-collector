@@ -8,52 +8,36 @@
 git clone https://github.com/VrHb/quiz-api-collector.git
 ```
 
-2. Активируйте виртуальное окружение
-
-```
-python -m venv <название окружения>
-```
-
-3. Установите необходимые библиотеки
-
-```
-pip install -r requirements.txt
-```
-
-#### Переменные окружения
-
-1. Создайте .env файл
+2. Создайте .env файл
 
 ```
 touch .env
 ```
 
-2. Добавьте пароль и порт для postgresql в файл
+3. Добавьте пароль для postgresql в файл
 
 ```
 echo "PSQL_PASSWORD=<ваш пароль к бд>" >> .env";
-echo "PSQL_PORT=<порт>" >> .env
 ```
 
-#### Создание контейнера с postgresql
 
-1. Запустите сборку контейнера
+3. Запустите сборку контейнера
 
-```
-docker-compose up -d
-```
-
-## Запуск сервиса
-
-```
-uvicorn main:app --reload
+```sh
+docker-compose build && docker-compose up -d
 ```
 
-#### Пример запроса
+4. Убедитесь что контейнеры запустились
+
+```sh
+docker ps -a
+```
+
+## Пример запроса
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/quiz/' \
+  'http://127.0.0.1:9000/quiz/' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
