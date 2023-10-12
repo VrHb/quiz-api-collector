@@ -17,7 +17,7 @@ touch .env
 3. Добавьте пароль для postgresql в файл
 
 ```
-echo "PSQL_PASSWORD=<ваш пароль к бд>" >> .env";
+echo "PSQL_PASSWORD=<ваш пароль к бд>" >> .env
 ```
 
 
